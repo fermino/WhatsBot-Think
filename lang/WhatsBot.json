@@ -1,0 +1,8 @@
+{
+	"message:module::not_loaded":"That module doesn't exists. Try !help to see a list of available modules",
+	"message:not_admin":"You need admin rights in order to do that",
+	"message:module::not_enabled":"That module is loaded, but is disabled. Ask the admin about it",
+	"message:internal_error":"Internal error",
+	"message:internal_error:wrong_response_code":"Internal error. The code (%s) returned by the module is wrong",
+	"message:module::load_error":"That module is loaded, but there are some troubles (at reload, json-php not readable/lint). If you are the admin, see the logs!"
+}
