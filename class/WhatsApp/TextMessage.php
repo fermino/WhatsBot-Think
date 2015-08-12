@@ -12,7 +12,7 @@
 			$this->Text = $Text;
 		}
 
-		public function GetText($ModuleName, $Else = false, Array $Params = array())
+		public function GetText($ModuleName, Array $Params = array(), $Else = false)
 		{
 			$Length = strlen($ModuleName) + 2;
 

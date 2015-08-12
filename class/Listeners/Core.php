@@ -33,5 +33,9 @@
 			$this->Parser = $Parser;
 			$this->ModuleManager = $ModuleManager;
 			$this->ThreadManager = $ThreadManager;
+
+			$this->Load();
 		}
+
+		abstract protected function Load();
 	}

@@ -84,7 +84,7 @@
 							Std::Out("[Warning] [Threads] Can't load {$this->Name}. {$this->PathExtension} file is not readable");
 					}
 					else
-						Std::Out("[Warning] [Threads] Can't load {$this->Name}. Json file is not readable/decodeable");
+						Std::Out("[Warning] [Threads] Can't load {$this->Name}. Json file is not decodeable");
 				}
 				else
 					Std::Out("[Warning] [Threads] Can't load {$this->Name}. It is not in Threads folder");

@@ -5,14 +5,12 @@
 
 	require_once 'class/Think/Parser.php';
 
-	class Think extends WhatsBotListenerCore
+	class ThinkListener extends WhatsBotListenerCore
 	{
 		protected $ThinkParser = null;
 
-		public function __construct(WhatsBot $WhatsBot, WhatsApp $WhatsApp, WhatsBotParser $Parser, ModuleManager $ModuleManager, ThreadManager $ThreadManager)
+		protected function Load()
 		{
-			parent::__construct($WhatsBot, $WhatsApp, $Parser, $ModuleManager, $ThreadManager);
-
 			$this->ThinkParser = new ThinkParser($this->WhatsApp);
 		}
 
