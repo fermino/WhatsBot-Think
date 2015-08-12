@@ -11,7 +11,7 @@
 
 		protected function Load()
 		{
-			$this->ThinkParser = new ThinkParser($this->WhatsApp);
+			$this->ThinkParser = new ThinkParser($this->WhatsBot, $this->WhatsApp);
 		}
 
 		public function onGetMessage($Me, $From, $ID, $Type, $Time, $Name, $Text)

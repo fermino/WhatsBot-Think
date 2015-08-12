@@ -1,21 +1,29 @@
 <?php
 	require_once 'class/Lib/_Loader.php';
 
+	require_once 'class/WhatsBot.php';
+
 	require_once 'class/WhatsApp.php';
 
 	require_once 'class/WhatsApp/TextMessage.php';
 
 	class ThinkParser
 	{
+		private $WhatsBot = null;
+
 		private $WhatsApp = null;
 
 		private $PDO = null;
 
-		public function __construct(WhatsApp $WhatsApp)
+		public function __construct(WhatsBot $WhatsBot, WhatsApp $WhatsApp)
 		{
+			$this->WhatsBot = $WhatsBot;
 			$this->WhatsApp = $WhatsApp;
 
-			$this->PDO = new PDO('sqlite:data/Think.sqlite');
+			if(!is_readable('data/Think.sqlite'))
+				$this->WhatsBot->_Exit('You must create an empty database. Go to data/ and execute create_think.php');
+			else
+				$this->PDO = new PDO('sqlite:data/Think.sqlite');
 		}
 
 		public function Parse(TextMessage $Message)

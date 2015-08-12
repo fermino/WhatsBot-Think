@@ -23,4 +23,4 @@
 			echo 'Failure!';
 	}
 	else
-		echo "Source file doesn't exists";
+		echo "Source file doesn't exist";
