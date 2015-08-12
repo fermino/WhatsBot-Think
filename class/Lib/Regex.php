@@ -1,7 +1,7 @@
 <?php
 	require_once '_Loader.php';
 
-	require_once 'class/LuaWithPHP.php';
+	require_once 'class/LuaFunctions.php';
 
 	class Regex
 	{
@@ -12,7 +12,7 @@
 			preg_match_all($Pattern, $Subject, $Matches);
 
 			if($FixArray)
-				return LuaWithPHP::FixArrayRecursive($Matches[0]);
+				return LuaFixArrayRecursive($Matches[0]);
 			else
 				return $Matches[0];
 		}

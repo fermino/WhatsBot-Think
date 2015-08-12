@@ -1,7 +1,7 @@
 <?php
 	require_once '_Loader.php';
 
-	require_once 'class/LuaWithPHP.php';
+	require_once 'class/LuaFunctions.php';
 
 	class Config
 	{
@@ -56,7 +56,7 @@
 			if(isset(self::$Config[$Filename]))
 			{
 				if($FixArray)
-					return LuaWithPHP::FixArrayRecursive(self::$Config[$Filename]);
+					return LuaFixArrayRecursive(self::$Config[$Filename]);
 				else
 					return self::$Config[$Filename];
 			}

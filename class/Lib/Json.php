@@ -1,7 +1,7 @@
 <?php
 	require_once '_Loader.php';
 
-	require_once 'class/LuaWithPHP.php';
+	require_once 'class/LuaFunctions.php';
 
 	class Json
 	{
@@ -18,7 +18,7 @@
 					if($Data !== null)
 					{
 						if($FixArray)
-							return LuaWithPHP::FixArrayRecursive($Data);
+							return LuaFixArrayRecursive($Data);
 						else
 							return $Data;
 					}

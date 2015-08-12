@@ -15,6 +15,7 @@
 			try
 			{
 				require_once 'LuaWithPHP.php';
+				require_once 'LuaFunctions.php';
 
 				$this->Lua = new LuaWithPHP;
 

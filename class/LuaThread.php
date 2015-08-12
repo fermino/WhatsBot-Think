@@ -11,6 +11,7 @@
 		protected function _Load()
 		{
 			require_once 'LuaWithPHP.php';
+			require_once 'LuaFunctions.php';
 
 			return self::LOADED;
 		}

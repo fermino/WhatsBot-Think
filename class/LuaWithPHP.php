@@ -1,6 +1,8 @@
 <?php
 	require_once 'class/Lib/_Loader.php';
 
+	require_once 'LuaFunctions.php';
+
 	class LuaWithPHP extends Lua
 	{
 		public function __construct($LuaScriptFile = null)
@@ -58,40 +60,13 @@
 			}
 			elseif(is_array($Value))
 			{
-				if(is_object($this->Assign($Key, self::FixArrayRecursive($Value))))
+				if(is_object($this->Assign($Key, LuaFixArrayRecursive($Value))))
 					return true;
 			}
 
 			Std::Out("[Warning] [Lua] Can't assign a non-scalar/array value (\${$Key}, " . gettype($Value) . ')');
 
 			return false;
-		}
-
-		public static function FixArray(Array $Array)
-		{
-			if(array_key_exists(0, $Array))
-			{
-				$Keys = array_keys($Array);
-				
-				for($i = count($Keys) - 1; $i >= 0; $i--)
-					if(is_int($Keys[$i]) || strval(intval($Keys[$i])) === $Keys[$i])
-						$Keys[$i] = intval($Keys[$i]) + 1;
-
-				return array_combine($Keys, array_values($Array));
-			}
-
-			return $Array;
-		}
-
-		public static function FixArrayRecursive(Array $Array)
-		{
-			$Array = self::FixArray($Array);
-
-			foreach(array_keys($Array) as $Key)
-				if(is_array($Array[$Key]))
-					$Array[$Key] = self::FixArrayRecursive($Array[$Key]);
-
-			return $Array;
 		}
 
 		# Callbacks
