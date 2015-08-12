@@ -1,0 +1,5 @@
+filter:
+    excluded_paths:
+        - class/WhatsAPI/*
+    paths:
+        - class/WhatsAPI/events/*

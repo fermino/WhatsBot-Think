@@ -2,4 +2,5 @@
 languages:
   PHP: true
 exclude_paths:
-- "class/WhatsAPI/*.*"
+  - "class/WhatsAPI/*.*"
+  - "class/Lib/*/*.*"
