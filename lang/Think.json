@@ -1,5 +1,7 @@
 {
 	"help":"Mandame una frase por mensaje privado para añadirla a la lista o envia un punto (\".\") en un grupo/privado para leer alguna frase aleatoria. \n\nAcordate, es todo anónimo, nadie va a saber que vos lo dijiste :P",
 	"message:think_saved":"Frase guardada :D",
-	"message:think_save_failure":"Uh, hubo un error, intentá de nuevo en un rato :/"
+	"message:think_save_failure":"Uh, hubo un error, intentá de nuevo en un rato :/",
+	"message:think_get_failure":"Uh, hubo un error, intentá de nuevo en un rato :/",
+	"message:think_empty_db":"No hay frases D:"
 }

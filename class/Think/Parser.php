@@ -70,8 +70,14 @@
 					if($Response !== false)
 					{
 						$Think = $Response->fetch();
-						
-						$this->WhatsApp->SendRawMessage($Message->From, $Think['think']);
+
+						if($Think === false)
+						{
+							$this->WhatsApp->SendMessage($Message->From, 'message:think_empty_db');
+							$this->WhatsApp->SendMessage($Message->From, 'help');
+						}
+						else
+							$this->WhatsApp->SendRawMessage($Message->From, $Think['think']);
 					}
 					else
 					{
