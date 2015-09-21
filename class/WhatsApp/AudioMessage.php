@@ -11,7 +11,7 @@
 		{
 			parent::__construct($Me, $From, $User, $ID, $Type, $Time, $Name, 'audio', $URL, $File, $Size, $MIME, $Hash);
 
-			$this->Duration = $Duration;
+			$this->Duration = (int) $Duration;
 			$this->Codec = $Codec;
 		}
 	}

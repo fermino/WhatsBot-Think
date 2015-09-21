@@ -5,8 +5,6 @@
 
 	require_once 'WhatsApp.php';
 
-	require_once 'Listeners/WhatsBot.php';
-
 	require_once 'Parser.php';
 
 	require_once 'ModuleManager.php';
@@ -19,7 +17,6 @@
 		private $WhatsApp = null;
 		private $Password = null;
 
-		private $Listener = null;
 		private $Parser = null;
 
 		private $ModuleManager = null;
@@ -29,7 +26,7 @@
 		private $Debug = false;
 		private $StartTime = null;
 
-		private $Exit = false;
+		private $Exit = false; // Make event => onExit?
 
 		public function __construct($Debug = false)
 		{
@@ -64,8 +61,6 @@
 
 				$this->Parser = new WhatsBotParser($this->WhatsApp, $this->ModuleManager);
 
-				$this->Listener = new WhatsBotListener($this, $this->WhatsApp, $this->Parser, $this->ModuleManager, $this->ThreadManager);
-
 				# Load
 
 				$this->ModuleManager->LoadModules();
@@ -74,14 +69,14 @@
 
 				# Binding
 
-				$this->WhatsApp->EventManager()->LoadListeners($this, $this->WhatsApp, $this->Parser, $this->ModuleManager, $this->ThreadManager, $this->Listener);
+				$this->WhatsApp->EventManager()->LoadListeners($this, $this->WhatsApp, $this->Parser, $this->ModuleManager, $this->ThreadManager, array('Connection', 'WhatsBot'));
 			}
 			else
 				throw new Exception('You have to setup the config file config/WhatsBot.json');
 		}
 
 		private function Connect($Show = true, $Retries = 3) // Don't hardcode D:
-		{
+		{ // $w->reconnect();
 			if($Show)
 				Std::Out();
 

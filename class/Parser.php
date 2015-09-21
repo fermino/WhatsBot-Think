@@ -24,8 +24,22 @@
 
 		public function ParseTextMessage(TextMessage $Message)
 		{
-			if(!empty($Message->Text) && $Message->Text[0] === '!')
-				return $this->ParseCommandMessage($Message);
+			if(!empty($Message->Text))
+			{
+				if($Message->Text[0] === '!')
+					return $this->ParseCommandMessage($Message);
+				else
+				{
+					# Text Event
+					
+					$Module = $this->ModuleManager->GetModule('Event', 'text', false);
+
+					if($Module instanceof Module)
+						$this->SendResponse($Message, $Module->Execute($Message));
+					elseif($Module !== Module::NOT_LOADED)
+						$this->SendResponse($Message, $Module);
+				}
+			}
 
 			foreach(Regex::MatchAll(Regex::URL, $Message->Text) as $URL)
 				$this->ParseURLMessage($Message, $URL);
@@ -62,7 +76,7 @@
 
 			# URL Event
 
-			$Module = $this->ModuleManager->GetModule('_', 'url', false);
+			$Module = $this->ModuleManager->GetModule('Event', 'url', false);
 
 			if($Module instanceof Module)
 				$this->SendResponse($Message, $Module->Execute($Message, array('URL' => $URL, 'Domain' => $Domain, 'Extension' => $Extension)));

@@ -18,7 +18,7 @@
 			$this->User = $User;
 			$this->ID = $ID;
 			$this->Type = $Type;
-			$this->Time = intval($Time);
+			$this->Time = (int) $Time;
 			$this->Name = $Name;
 		}
 

@@ -19,7 +19,7 @@
 			$this->SubType = $SubType;
 			$this->URL = $URL;
 			$this->File = $File;
-			$this->Size = $Size;
+			$this->Size = (int) $Size;
 			$this->MIME = $MIME;
 			$this->Hash = $Hash;
 		}

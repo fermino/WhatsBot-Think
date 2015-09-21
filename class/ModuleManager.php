@@ -19,11 +19,12 @@
 
 		private $Modules = array
 		( // What if we don't create this ? Traits should be protected (getter/setter?)
+			// Avoid this, load it all dinamically from Modules.json
 			'Command' => array(),
 			'Domain' => array(),
 			'Extension' => array(),
 			'Media' => array(),
-			'_' => array()
+			'Event' => array()
 		);
 
 		public function __construct(WhatsBot $WhatsBot, WhatsApp $WhatsApp)

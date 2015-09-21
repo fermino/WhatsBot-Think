@@ -13,8 +13,8 @@
 		{
 			parent::__construct($Me, $From, $User, $ID, $Type, $Time, $Name, 'image', $URL, $File, $Size, $MIME, $Hash);
 
-			$this->Width = $Width;
-			$this->Height = $Height;
+			$this->Width = (int) $Width;
+			$this->Height = (int) $Height;
 			$this->Preview = $Preview;
 			$this->Caption = empty($Caption) ? null : $Caption;
 		}

@@ -11,65 +11,66 @@
 	require_once 'class/ThreadManager.php';
 
 	require_once 'class/Listeners/Core.php';
-	require_once 'class/Listeners/WhatsBot.php';
 
 	class WhatsApiEventsManager
 	{
 		private $Listeners = array();
 
-		public function LoadListeners(WhatsBot $WhatsBot, WhatsApp $WhatsApp, WhatsBotParser $Parser, ModuleManager $ModuleManager, ThreadManager $ThreadManager, WhatsBotListener $WhatsBotListener)
+		public function LoadListeners(WhatsBot $WhatsBot, WhatsApp $WhatsApp, WhatsBotParser $Parser, ModuleManager $ModuleManager, ThreadManager $ThreadManager, Array $ToLoad = array())
 		{
 			Std::Out();
 			Std::Out('[Info] [Events] Loading');
 
-			$this->BindListener($WhatsBotListener, 'WhatsBot');
-
 			$Listeners = Config::Get('Listeners');
 
-			if(is_array($Listeners))
+			if(!is_array($Listeners))
 			{
-				foreach($Listeners as $Listener)
+				Std::Out("[Warning] [Events] config/Listeners.json must be an array");
+
+				$Listeners = array();
+			}
+
+			$Listeners = array_merge($ToLoad, $Listeners);
+
+			foreach($Listeners as $Listener)
+			{
+				if(!empty($Listener) && is_string($Listener))
 				{
-					if(!empty($Listener) && is_string($Listener))
+					if($Listener[0] != '-')
 					{
-						if($Listener[0] != '-')
+						$ListenerClass = $Listener . 'Listener';
+
+						$Path = "class/Listeners/{$Listener}.php";
+
+						if(basename(dirname(realpath($Path))) === 'Listeners')
 						{
-							$ListenerClass = $Listener . 'Listener';
+							// Lint
 
-							$Path = "class/Listeners/{$Listener}.php";
+							require_once $Path;
 
-							if(basename(dirname(realpath($Path))) === 'Listeners')
+							if(class_exists($ListenerClass))
 							{
-								// Lint
-
-								require_once $Path;
-
-								if(class_exists($ListenerClass))
+								if(is_subclass_of($ListenerClass, 'WhatsBotListenerCore'))
 								{
-									if(is_subclass_of($ListenerClass, 'WhatsBotListenerCore'))
-									{
-										$ListenerInstance = new $ListenerClass($WhatsBot, $WhatsApp, $Parser, $ModuleManager, $ThreadManager);
+									$ListenerInstance = new $ListenerClass($WhatsBot, $WhatsApp, $Parser, $ModuleManager, $ThreadManager);
 
-										$this->BindListener($ListenerInstance, $Listener);
-									}
-									else
-										Std::Out("[Warning] [Events] Can't load {$ListenerClass}. Class must inherit from WhatsBotListenerCore");
+									$this->BindListener($ListenerInstance, $Listener);
 								}
 								else
-									Std::Out("[Warning] [Events] Can't load {$ListenerClass}. Class doesn't exist");
+									Std::Out("[Warning] [Events] Can't load {$ListenerClass}. Class must inherit from WhatsBotListenerCore");
 							}
 							else
-								Std::Out("[Warning] [Events] Can't load {$ListenerClass}. {$Listener}.php is not in class/Listeners");
+								Std::Out("[Warning] [Events] Can't load {$ListenerClass}. Class doesn't exist");
 						}
 						else
-							$this->DisableListener(substr($Listener, 1, strlen($Listener)));
+							Std::Out("[Warning] [Events] Can't load {$ListenerClass}. {$Listener}.php is not in class/Listeners");
 					}
 					else
-						Std::Out('[Warning] [Events] Empty/non-string listener name');
+						$this->DisableListener(substr($Listener, 1, strlen($Listener)));
 				}
+				else
+					Std::Out('[Warning] [Events] Empty/non-string listener name');
 			}
-			else
-				Std::Out("[Warning] [Events] config/Listeners.json must be an array");
 
 			Std::Out('[Info] [Events] Ready!');
 		}
@@ -78,7 +79,7 @@
 		{
 			if(is_object($Listener))
 			{
-				$ClassName = get_class($Listener);
+				$ClassName = get_class($Listener); // use class name instead keys?
 
 				if($Key === null)
 					$Key = $this->GetNewKey();
